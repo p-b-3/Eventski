@@ -3,7 +3,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const keys = require("../config/keys");
 const mongoose = require("mongoose");
 
-// User is model class, can use to create new model instance
+// User is model class, can use to create a new model instance
 const User = mongoose.model("users");
 
 // add cookie to user
