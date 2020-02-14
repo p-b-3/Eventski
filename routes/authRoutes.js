@@ -9,7 +9,13 @@ module.exports = app => {
   );
 
   //send code to google for user info
-  app.get("/auth/google/callback", passport.authenticate("google"));
+  app.get(
+    "/auth/google/callback",
+    passport.authenticate("google"),
+    (req, res) => {
+      res.redirect("/surveys");
+    }
+  );
 
   app.get("/api/logout", (req, res) => {
     //passport attaches user and other items to req obj including logout which removes cookie

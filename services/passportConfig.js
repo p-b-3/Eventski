@@ -27,25 +27,19 @@ passport.use(
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
       callbackURL: keys.callbackURI,
-      //callbackURL: "/auth/google/callback",
       proxy: true
     },
     // callback function with user profile and accessToken from google
-    (accessToken, refreshToken, profile, done) => {
-      User.findOne({ googleId: profile.idea }).then(existingUser => {
-        //called with user found, if none the equal to null
-        if (existingUser) {
-          // pass in error and user record to passport done function
-          done(null, existingUser);
-        } else {
-          new User({ googleId: profile.id }) //creates mongoose model instance
-            .save()
-            // when user is saved
-            .then(user => {
-              done(null, user);
-            });
-        }
-      });
+    async (accessToken, refreshToken, profile, done) => {
+      const existingUser = await User.findOne({ googleId: profile.idea });
+      //called with user found, if none then equal to null
+      if (existingUser) {
+        // pass in error and user record to passport done function
+        return done(null, existingUser);
+      }
+
+      const user = await new User({ googleId: profile.id }).save(); //creates mongoose model instance
+      done(null, user);
     }
   )
 );
