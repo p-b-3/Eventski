@@ -18,9 +18,9 @@ module.exports = app => {
   );
 
   app.get("/api/logout", (req, res) => {
-    //passport attaches user and other items to req obj including logout which removes cookie
+    //passport attaches user and other items to req obj including logout function which removes cookie
     req.logout();
-    res.send(req.user);
+    res.redirect("/");
   });
 
   app.get("/api/current_user", (req, res) => {
