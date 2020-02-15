@@ -6,5 +6,11 @@ import { FETCH_USER } from "./types";
 //return is implied if returns single expression with arrow funtion, so remove return
 export const fetchUser = () => async dispatch => {
   const res = await axios.get("/api/current_user");
-  dispatch({ type: FETCH_USER, payload: res.data }); //dispatch action to all reducers
+  dispatch({ type: FETCH_USER, payload: res.data }); //dispatch sends action to all reducers
+};
+
+export const handleToken = token => async dispatch => {
+  //send token to back end
+  const res = await axios.post("/api/stripe", token); //back end responds with user with updated number of credits
+  dispatch({ type: FETCH_USER, payload: res.data }); //get back some user model as function above
 };
