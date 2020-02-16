@@ -4,10 +4,12 @@ const passport = require("passport");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("./models/User"); //require in to run this file and create model class
+require("./models/Survey");
 require("./services/passportConfig");
 const keys = require("./config/keys");
 const authRoutes = require("./routes/authRoutes");
 const billingRoutes = require("./routes/billingRoutes");
+const surveyRoutes = require("./routes/surveyRoutes");
 
 mongoose.connect(keys.mongoURI);
 
@@ -27,6 +29,7 @@ app.use(passport.session());
 
 billingRoutes(app);
 authRoutes(app);
+surveyRoutes(app);
 
 if (process.env.NODE_ENV == "production") {
   // Express to serve up production assets if specific file matches with what that request is looking for- mains.js or main.class if cant file in rotues above
