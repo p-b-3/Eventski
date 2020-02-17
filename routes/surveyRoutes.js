@@ -27,7 +27,7 @@ module.exports = async app => {
       await mailer.send();
       //email sent succesfully so save survey
       await survey.save();
-      req.user.credit -= 1;
+      req.user.credits -= 1;
       const user = await req.user.save();
 
       res.send(user); //updates user model in authReducer to update header
