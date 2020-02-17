@@ -31,7 +31,7 @@ passport.use(
     },
     // callback function with user profile and accessToken from google
     async (accessToken, refreshToken, profile, done) => {
-      const existingUser = await User.findOne({ googleId: profile.idea });
+      const existingUser = await User.findOne({ googleId: profile.id });
       //called with user found, if none then equal to null
       if (existingUser) {
         // pass in error and user record to passport done function
