@@ -7,10 +7,10 @@ module.exports = survey => {
           <p>Please answer the following question:</p>
           <p>${survey.body}</p>
           <div>
-            <a href="/">Yes</a>
+            <a href="https://afternoon-mesa-80131.herokuapp.com/">Yes</a>
           </div>
           <div>
-            <a href="/">No</a>
+            <a href="https://afternoon-mesa-80131.herokuapp.com/">No</a>
           </div>
         </div>
       </body>
