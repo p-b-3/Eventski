@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import * as actions from "../actions";
 
 import Dashboard from "./Dashboard";
-const SurveyNew = () => <h2>SurveyNew</h2>;
+import SurveyNew from "./surveys/SurveyNew";
 
 class App extends Component {
   //connect App to redux store using react-redux connect helper to give App access to call actions creators
@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <div className="container">
         <BrowserRouter>
-          <div>
+          <div classname="container">
             <Header />
             <Route exact={true} path="/" component={Landing} />
             <Route exact path="/surveys" component={Dashboard} />
