@@ -8,7 +8,7 @@ class SurveyNew extends Component {
   state = { showFormReview: false }; //initialize state
 
   renderContent() {
-    if (this.showFormReview) {
+    if (this.state.showFormReview) {
       return <SurveyFormReview />;
     }
     return (
