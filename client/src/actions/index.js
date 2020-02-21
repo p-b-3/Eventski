@@ -15,10 +15,8 @@ export const handleToken = token => async dispatch => {
   dispatch({ type: FETCH_USER, payload: res.data }); //get back some user model as function above
 };
 
-export const submitSurvey = values => {
+export const submitSurvey = values => async dispatch => {
   //receive values from form
-  //send token to back end
-  //const res = await axios.post("/api/stripe", token);
-  //dispatch({ type: FETCH_USER, payload: res.data });
-  return { type: "submit_survey" };
+  const res = await axios.post("api/surveys/", values); //send values object as body to route
+  return { type: FETCH_USER, payload: res.data }; //since sending udpating user back from post route at api/surveys
 };

@@ -45,7 +45,7 @@ function validate(values) {
   //obj that contains values coming off the form
   const errors = {};
 
-  errors.emails = validateEmails(values.emails || "");
+  errors.recipients = validateEmails(values.recipients || "");
 
   formFields.forEach(field => {
     if (!values[field.name]) {
