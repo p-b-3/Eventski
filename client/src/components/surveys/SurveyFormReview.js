@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import formFields from "./formFields";
 
-const SurveyFormReview = props => {
+const SurveyFormReview = (props, state) => {
   const reviewFields = formFields.map(field => {
     return (
       <div key={field.name}>
