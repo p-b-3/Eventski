@@ -14,3 +14,11 @@ export const handleToken = token => async dispatch => {
   const res = await axios.post("/api/stripe", token); //back end responds with user with updated number of credits
   dispatch({ type: FETCH_USER, payload: res.data }); //get back some user model as function above
 };
+
+export const submitSurvey = values => {
+  //receive values from form
+  //send token to back end
+  //const res = await axios.post("/api/stripe", token);
+  //dispatch({ type: FETCH_USER, payload: res.data });
+  return { type: "submit_survey" };
+};
