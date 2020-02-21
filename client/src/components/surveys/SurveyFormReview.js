@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom"; //provides histroy object as prop
 import formFields from "./formFields";
 import * as actions from "../../actions";
 
-const SurveyFormReview = ({ onCancel, formValues, submitSurvey }) => {
+const SurveyFormReview = ({ onCancel, formValues, submitSurvey, history }) => {
   //destructuring of props
   const reviewFields = formFields.map(field => {
     return (
@@ -25,7 +26,7 @@ const SurveyFormReview = ({ onCancel, formValues, submitSurvey }) => {
         Back
       </button>
       <button
-        onClick={() => submitSurvey(formValues)} //on click call action creator submitSurvey (addes as prop via connect below)
+        onClick={() => submitSurvey(formValues, history)} //on click call action creator submitSurvey (added as prop via connect below) with form values and history obj from react router
         className="teal btn-flat white-text right"
       >
         Send Survey
@@ -45,4 +46,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   actions
-)(SurveyFormReview);
+)(withRouter(SurveyFormReview));
