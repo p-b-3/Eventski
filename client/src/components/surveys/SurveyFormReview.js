@@ -2,12 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import formFields from "./formFields";
 
-const SurveyFormReview = (props, state) => {
+const SurveyFormReview = ({ onCancel, formValues }) => {
   const reviewFields = formFields.map(field => {
     return (
       <div key={field.name}>
         <label>{field.label}</label>
-        <div>{state.formValues[field.name]}</div>
+        <div>{formValues[field.name]}</div>
       </div>
     );
   });
@@ -16,7 +16,7 @@ const SurveyFormReview = (props, state) => {
     <div>
       <h5>Please review your details</h5>
       {reviewFields}
-      <button className="yellow darken-3 btn-flat" onClick={props.onCancel}>
+      <button className="yellow darken-3 btn-flat" onClick={onCancel}>
         Back
       </button>
     </div>
