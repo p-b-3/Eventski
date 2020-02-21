@@ -17,6 +17,6 @@ export const handleToken = token => async dispatch => {
 
 export const submitSurvey = values => async dispatch => {
   //receive values from form
-  const res = await axios.post("api/surveys/", values); //send values object as body to route
+  const res = await axios.post("/api/surveys/", values); //send values object as body to route
   return { type: FETCH_USER, payload: res.data }; //since sending udpating user back from post route at api/surveys
 };
