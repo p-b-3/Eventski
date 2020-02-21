@@ -64,5 +64,6 @@ function validate(values) {
 
 export default reduxForm({
   validate: validate, //validate when user hits submit
-  form: "surveyForm"
+  form: "surveyForm",
+  destroyOnMount: false //true by default, false to not destroy values when form is not being shown
 })(SurveyForm); //reduxForm adds additional props to SurveyForm (calls action creators, pulls data out of store and providing it to other components) allows our form to commiunicate with redux store
