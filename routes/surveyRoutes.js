@@ -4,10 +4,48 @@ const mongoose = require("mongoose");
 const Survey = mongoose.model("surveys");
 const Mailer = require("../services/Mailer");
 const surveyTemplate = require("../services/emailTemplates/SurveyTemplate");
+const _ = require("lodash");
+const { Path } = require("path-parser");
+const { URL } = require("url");
 
 module.exports = async app => {
   app.get("/api/surveys/thanks", (req, res) => {
     res.send("Thank you for your feedback");
+  });
+
+  app.post("/api/surveys/webhooks", (req, res) => {
+    //incoming array of events from sendgrid
+    const p = new Path("/api/surveys/:surveyId/:choice");
+
+    _.chain(req.body)
+      .map(({ email, url }) => {
+        const match = p.test(new URL(event.url).pathname); // returns object with variables from url or null
+        if (match) {
+          return {
+            email: event.email,
+            surveyId: match.surveyId,
+            choice: match.choice
+          }; //obj
+        }
+      })
+      .compact() //removes undefined
+      .uniqBy("email", "surveyId") //removes duplicates
+      .each(event => {
+        //mongo query
+        Survey.updateOne(
+          {
+            _id: surveyId,
+            recipients: {
+              $elemMatch: { email: email, responded: false }
+            }
+          },
+          {
+            $inc: { [choice]: 1 },
+            $set: { "recipients.$.responded": true }
+          }
+        ).exec();
+      })
+      .value();
   });
 
   app.post("/api/surveys", requireLogin, requireCredits, async (req, res) => {
