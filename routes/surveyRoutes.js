@@ -9,6 +9,13 @@ const { Path } = require("path-parser");
 const { URL } = require("url");
 
 module.exports = async app => {
+  app.get("/api/surveys", requireLogin, async (req, res) => {
+    // don't load recipients list to improve response time
+    const surveys = await Survey.find({ _user: req.user.id });
+
+    res.send(surveys);
+  });
+
   app.get("/api/surveys/:surveyId/:choice", (req, res) => {
     res.send("Thank you for your feedback");
   });
@@ -19,10 +26,10 @@ module.exports = async app => {
 
     _.chain(req.body)
       .map(({ email, url }) => {
-        const match = p.test(new URL(event.url).pathname); // returns object with variables from url or null
+        const match = p.test(new URL(url).pathname); // returns object with variables from url or null
         if (match) {
           return {
-            email: event.email,
+            email: email,
             surveyId: match.surveyId,
             choice: match.choice
           }; //obj
