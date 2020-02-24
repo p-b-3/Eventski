@@ -21,24 +21,18 @@ module.exports = async app => {
   });
 
   app.post("/api/surveys/webhooks", (req, res) => {
-    //incoming array of events from sendgrid
     const p = new Path("/api/surveys/:surveyId/:choice");
 
     _.chain(req.body)
       .map(({ email, url }) => {
-        const match = p.test(new URL(url).pathname); // returns object with variables from url or null
+        const match = p.test(new URL(url).pathname);
         if (match) {
-          return {
-            email: email,
-            surveyId: match.surveyId,
-            choice: match.choice
-          }; //obj
+          return { email, surveyId: match.surveyId, choice: match.choice };
         }
       })
-      .compact() //removes undefined
-      .uniqBy("email", "surveyId") //removes duplicates
-      .each(event => {
-        //mongo query
+      .compact()
+      .uniqBy("email", "surveyId")
+      .each(({ surveyId, email, choice }) => {
         Survey.updateOne(
           {
             _id: surveyId,
@@ -54,6 +48,8 @@ module.exports = async app => {
         ).exec();
       })
       .value();
+
+    res.send({});
   });
 
   app.post("/api/surveys", requireLogin, requireCredits, async (req, res) => {
