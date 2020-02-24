@@ -35,7 +35,7 @@ module.exports = async app => {
         }
       })
       .compact()
-      .uniqBy("email", "surveyId")
+      // .uniqBy("email", "surveyId")
       .each(({ surveyId, email, choice }) => {
         Survey.updateMany(
           {
