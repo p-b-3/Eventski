@@ -60,7 +60,7 @@ module.exports = async app => {
       subject: subject,
       body: body,
       recipients: recipients.split(",").map(email => {
-        return { email: email.trim() };
+        return { email: email.trim(), responded: false };
       }),
 
       _user: req.user.id,
