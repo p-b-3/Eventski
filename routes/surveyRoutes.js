@@ -41,7 +41,7 @@ module.exports = async app => {
           {
             _id: surveyId,
             recipients: {
-              $elemMatch: { email: email, responded: { $ne: true } }
+              $elemMatch: { email: email, responded: false }
             }
           },
           {
