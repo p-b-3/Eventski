@@ -6,6 +6,7 @@ const requireLogin = require("../middlewares/requireLogin");
 const requireCredits = require("../middlewares/requireCredits");
 const Mailer = require("../services/Mailer");
 const surveyTemplate = require("../services/emailTemplates/SurveyTemplate");
+const { ObjectId } = require("mongodb");
 
 const Survey = mongoose.model("surveys");
 
@@ -37,7 +38,7 @@ module.exports = app => {
       .each(({ surveyId, email, choice }) => {
         Survey.updateOne(
           {
-            _id: surveyId,
+            _id: new ObjectId(surveyId),
             recipients: {
               $elemMatch: { email: email }
             }
