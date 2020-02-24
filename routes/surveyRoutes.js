@@ -40,7 +40,7 @@ module.exports = app => {
           {
             _id: new ObjectId(surveyId),
             recipients: {
-              $elemMatch: { email: email }
+              $elemMatch: { email: email, responded: { $ne: true } }
             }
           },
           {
