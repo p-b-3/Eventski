@@ -60,27 +60,23 @@ module.exports = async app => {
     const { title, subject, body, recipients } = req.body;
 
     const survey = new Survey({
-      title: title,
-      subject: subject,
-      body: body,
-      recipients: recipients.split(",").map(email => {
-        return { email: email.trim(), responded: false };
-      }),
-
+      title,
+      subject,
+      body,
+      recipients: recipients.split(",").map(email => ({ email: email.trim() })),
       _user: req.user.id,
       dateSent: Date.now()
     });
-    //attempt to create and send email
-    const mailer = new Mailer(survey, surveyTemplate(survey)); //second arg is html content
+
+    const mailer = new Mailer(survey, surveyTemplate(survey));
 
     try {
       await mailer.send();
-      //email sent succesfully so save survey
       await survey.save();
       req.user.credits -= 1;
       const user = await req.user.save();
 
-      res.send(user); //updates user model in authReducer to update header
+      res.send(user);
     } catch (err) {
       res.status(422).send(err);
     }
