@@ -37,7 +37,7 @@ module.exports = async app => {
           {
             _id: surveyId,
             recipients: {
-              $elemMatch: { email: email, responded: false }
+              $elemMatch: { email: email, responded: { $ne: true } }
             }
           },
           {
@@ -60,7 +60,7 @@ module.exports = async app => {
       subject: subject,
       body: body,
       recipients: recipients.split(",").map(email => {
-        return { email: email.trim(), responded: false };
+        return { email: email.trim() };
       }),
 
       _user: req.user.id,
